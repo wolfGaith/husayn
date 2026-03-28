@@ -28,16 +28,10 @@ class BookController extends Controller
      * Store a newly created resource in storage.
      */
 public function store(Request $request)
-  {
-    Book::create([
-        'title' => $request->title,
-        'author' => $request->author,
-        'year_published' => $request->year_published,
-        'status' => 0
-    ]);
-
-    return redirect()->route('books.index');
- }
+{
+    Book::create($request->all());
+    return redirect()->back();
+}
 
     /**
      * Display the specified resource.
@@ -58,8 +52,8 @@ public function store(Request $request)
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, $id)
-   {
+ public function update(Request $request, $id)
+  {
     $book = Book::findOrFail($id);
     $book->update($request->all());
 
@@ -69,12 +63,12 @@ public function store(Request $request)
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
-   {
-     $book = Book::findOrFail($id);
-     $book->status = 1;
-     $book->save();
+  public function destroy($id)
+  {
+    $book = Book::findOrFail($id);
+    $book->status = 1;
+    $book->save();
 
-     return redirect()->route('books.index');
+    return redirect()->back();
 }
 }
